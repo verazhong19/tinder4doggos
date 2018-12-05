@@ -47,7 +47,7 @@ class App extends Component {
           :
             [
               <button className='btn-success btn-lg' onClick={this.componentDidMount.bind(this)}>Like</button>, 
-              <button className='btn-danger btn-lg' onClick={this.componentDidMount.bind(this)}>Dislike</button>
+              <button className='btn-danger btn-lg' onClick={()=>{this.componentDidMount.bind(this)();alert("Everyone loves dogs. You are wrong.");}}>Dislike</button>
             ]
           }
           </div>
