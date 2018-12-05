@@ -1,25 +1,57 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      dogs: [],
+      isLoaded: false,
+      hideBut: true, 
+    }
+  }
+  
+  componentDidMount() {
+    fetch('https://dog.ceo/api/breeds/image/random')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          isLoaded: true,
+          dogs: json, 
+          hideBut: false, 
+        })
+      })
+    this.setState({
+      hideBut: true, 
+    })
+  }
+  
   render() {
+
+    var {isLoaded, dogs} = this.state;
+
+    if (!isLoaded){
+      return<div>Loading dog...</div>
+    }
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="center">
+          <h1 className='heading'>Tinder for Dogs</h1>
+          <img src={dogs.message} alt="dog"></img>
+          <div>
+          {this.state.hideBut ? 
+            <></>
+          :
+            [
+              <button className='btn-success btn-lg' onClick={this.componentDidMount.bind(this)}>Like</button>, 
+              <button className='btn-danger btn-lg' onClick={this.componentDidMount.bind(this)}>Dislike</button>
+            ]
+          }
+          </div>
+        </div>
       </div>
     );
   }
